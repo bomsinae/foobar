@@ -38,11 +38,18 @@ export default function App() {
   }
 
   async function addNote() {
-    const { error } = await supabase.from("notes").insert({
+    const trimmed = value.trim();
+    if (!trimmed) return;
+
+    const { data, error } = await supabase.from("notes").insert({
       user_id: session.user.id,
-      content: value.trim(),
-    });
-    if (!error) setValue("");
+      content: trimmed,
+    }).select();
+
+    if (!error && data) {
+      setNotes((prev) => [data[0], ...prev]);
+      setValue("");
+    }
   }
 
   async function deleteNote(id) {
