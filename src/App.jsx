@@ -66,7 +66,7 @@ export default function App() {
     return (
       <div style={{ padding: 24 }}>
         <h2>Supabase Notes</h2>
-        <button onClick={signIn}>이메일로 로그인(매직링크)</button>
+        <button onClick={signIn}>이메일로 로그인</button>
       </div>
     );
 
