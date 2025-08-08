@@ -53,7 +53,15 @@ export default function App() {
   }
 
   async function deleteNote(id) {
-    await supabase.from("notes").delete().eq("id", id);
+    const before = notes;
+    setNotes((prev) => prev.filter((n) => n.id !== id));
+
+    const { error } = await supabase.from("notes").delete().eq("id", id);
+
+    if (error) {
+      setNotes(before);
+      alert("삭제 실패: " + error.message);
+    }
   }
 
   async function signIn() {
